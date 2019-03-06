@@ -1,4 +1,4 @@
-import bookApp from './pages/bugs-app-cmp.js';
+import bugsApp from './pages/bugs-app-cmp.js';
 import myRoutes from './routes.js';
 
 const myRouter = new VueRouter({routes: myRoutes});
@@ -8,6 +8,6 @@ window.vueApp = new Vue({
     el: '#app',
     router: myRouter,
     components: {
-        bookApp
+        bugsApp
     }
 })

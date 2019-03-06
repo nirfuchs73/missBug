@@ -6,7 +6,7 @@ import bugsApp from './pages/bugs-app-cmp.js';
 
 const routes = [
     { path: '/', component: homeCmp },
-    { path: '/books', component: bugsApp },
+    { path: '/bugs', component: bugsApp },
     // { path: '/books/:bookId', component: bookDetails },
     // { path: '/addbook', component: booksAdd },
     { path: '/about', component: aboutCmp }

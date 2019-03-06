@@ -22,10 +22,12 @@ function getBugs() {
 }
 
 function deleteBug(bugId) {
-    var bugIdx = gBugs.findIndex(bug => bugId === bug.id);
-    gBugs.splice(bugIdx, 1);
-    storageService.store(BUGS_KEY, gBugs);
-    return Promise.resolve();
+    var api = `http://127.0.0.1:3000/api/bug/${bugId}`;
+    return axios.delete(api).then(res => res.data);
+    // var bugIdx = gBugs.findIndex(bug => bugId === bug.id);
+    // gBugs.splice(bugIdx, 1);
+    // storageService.store(BUGS_KEY, gBugs);
+    // return Promise.resolve();
 }
 
 // function addBug(vendor) {

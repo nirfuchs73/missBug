@@ -8,6 +8,27 @@ export default {
     template: `
         <section class="bugs-app">
             <h1>Bugs App</h1>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Severity</th>
+                        <th>Creator</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody  v-for="(currBug, idx) in bugs" :key="currBug._id">
+                    <tr>
+                        <td>{{currBug.title}}</td>
+                        <td>{{currBug.description}}</td>
+                        <td>{{currBug.severity}}</td>
+                        <td>{{currBug.creator.name}}</td>
+                        <td><button v-on:click="onDeleteClicked(currBug._id)">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
             <!-- <book-add></book-add>
             <book-filter v-on:filtered="setFilter"></book-filter>
             <book-list v-bind:books="booksToShow"></book-list>
@@ -37,6 +58,16 @@ export default {
         //     .then(books => this.books = books);
     },
     methods: {
+        onDeleteClicked(bugId) {
+            bugService.deleteBug(bugId)
+                .then(res => {
+                    // console.log(res);
+                    bugService.getBugs()
+                        .then(bugs => {
+                            this.bugs = bugs;
+                        });
+                });
+        }
         // setFilter(filterBy) {
         //     console.log('BoookApp Got Filter: ', filterBy);
         //     this.filterBy = filterBy;
