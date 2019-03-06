@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>missBug</title>
+    <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <div id="app">
+        <nav>
+            <router-link to="/" exact>Home</router-link>
+            <router-link to="/bugs">Bugs</router-link>
+            <!-- <router-link to="/addbook">Add Book</router-link>
+            <router-link to="/about">About</router-link> -->
+        </nav>
+        <router-view></router-view>
+        <!-- <book-app></book-app> -->
+        <footer>
+            Copyright &copy; 2019
+        </footer>
+    </div>
+
+    <script src="lib/jquery/jquery.js"></script>
+    <script src="lib/bootstrap/bootstrap.js"></script>
+    <script src="lib/axios/axios.js"></script>
+    <script src="lib/vue/vue.js"></script>
+    <script src="lib/vue/vue-router.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>
