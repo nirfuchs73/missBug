@@ -12,13 +12,20 @@ module.exports = {
 // var bugs = _createBugs();
 var bugs = require('../data/bugs.json');
 
-function query() {
-    return Promise.resolve(bugs);
+// function query() {
+//     return Promise.resolve(bugs);
+// }
+
+function query(filterBy) {
+    // var carsToShow = cars.filter(car => car.userId === filterBy.userId)
+    console.log(filterBy.userName);
+    var bugsToShow = bugs.filter(bug => bug.creator.name === filterBy.userName);
+    return Promise.resolve(bugsToShow);
 }
 
-function add(bug, creator) {
+function add(bug, user) {
     bug._id = _makeId();
-    bug.creator = { name: creator, id: 'abc' }
+    bug.creator = { name: user.userName, _id: user._id }
     bugs.push(bug)
     return _saveBugsToFile().then(() => bug)
 }

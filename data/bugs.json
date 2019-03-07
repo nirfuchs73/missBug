@@ -6,8 +6,8 @@
         "severity": 3,
         "createdAt": 1542107359454,
         "creator": {
-            "_id": "xyz111",
-            "name": "Shahar"
+            "_id": "Rnl",
+            "name": "user1"
         }
     },
     {
@@ -17,8 +17,8 @@
         "severity": 3,
         "createdAt": 1542107359454,
         "creator": {
-            "_id": "xyz111",
-            "name": "Shahar"
+            "_id": "1K0",
+            "name": "user2"
         }
     },
     {
@@ -28,8 +28,74 @@
         "severity": 3,
         "createdAt": 1542107359454,
         "creator": {
-            "_id": "xyz111",
-            "name": "Shahar"
+            "_id": "8TD",
+            "name": "user3"
         }
+    },
+    {
+        "title": "New bug",
+        "description": "New bug",
+        "severity": 2,
+        "createdAt": 1551984102797,
+        "creator": {
+            "name": "user3",
+            "_id": "8TD"
+        },
+        "_id": "EFu"
+    },
+    {
+        "title": "New bug",
+        "description": "New bug",
+        "severity": 2,
+        "createdAt": 1551987320789,
+        "creator": {
+            "name": "user3",
+            "_id": "8TD"
+        },
+        "_id": "pXS"
+    },
+    {
+        "title": "New bug",
+        "description": "New bug",
+        "severity": 2,
+        "createdAt": 1551987376656,
+        "creator": {
+            "name": "user1",
+            "_id": "Rnl"
+        },
+        "_id": "TUq"
+    },
+    {
+        "title": "New bug",
+        "description": "New bug",
+        "severity": 2,
+        "createdAt": 1551987384216,
+        "creator": {
+            "name": "user2",
+            "_id": "1K0"
+        },
+        "_id": "Tf3"
+    },
+    {
+        "title": "New bug",
+        "description": "New bug",
+        "severity": 2,
+        "createdAt": 1551987392295,
+        "creator": {
+            "name": "user3",
+            "_id": "8TD"
+        },
+        "_id": "XvG"
+    },
+    {
+        "title": "New bug",
+        "description": "New bug",
+        "severity": 2,
+        "createdAt": 1551987402591,
+        "creator": {
+            "name": "user1",
+            "_id": "Rnl"
+        },
+        "_id": "9re"
     }
 ]

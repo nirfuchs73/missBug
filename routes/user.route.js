@@ -21,7 +21,7 @@ module.exports = app => {
             })
             .catch(err => {
                 console.log('/api/signup', err);
-                res.status(500).send(err);
+                res.status(400).send(err);
             })
     })
 
@@ -36,7 +36,7 @@ module.exports = app => {
             })
             .catch(err => {
                 // console.log('BACKEND service ERROR', err);
-                res.status(500).send(err);
+                res.status(400).send(err);
             });
     });
 

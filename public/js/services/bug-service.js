@@ -11,11 +11,12 @@ export default {
 var bugs = [];
 
 
-function query() {
-    var api = 'http://127.0.0.1:3000/api/bug';
+function query(userName) {
+    var api = `http://127.0.0.1:3000/api/bug?userName=${userName}`;
     return axios.get(api)
-        .then(res => {
-            bugs = res.data;
+        .then(res => res.data)
+        .then(loadedBugs => {
+            bugs = loadedBugs;
             return bugs;
         });
 }
@@ -31,9 +32,15 @@ function deleteBug(bugId) {
 }
 
 
-function addBug(bugObj) {
+function addBug(bug) {
     var api = `http://127.0.0.1:3000/api/bug`;
-    return axios.post(api, bugObj).then(res => res.data);
+    return axios.post(api, bug)
+        .then(res => res.data)
+        .then(addedBug => {
+            // console.log(addedBug);
+            bugs.push(addedBug);
+            return addedBug;
+        });
 }
 
 function getBugById(bugId) {

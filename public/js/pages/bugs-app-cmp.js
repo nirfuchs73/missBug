@@ -18,6 +18,7 @@ export default {
                         <th>Description</th>
                         <th>Severity</th>
                         <th>Creator</th>
+                        <th>Creator Id</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -27,6 +28,7 @@ export default {
                         <td>{{currBug.description}}</td>
                         <td>{{currBug.severity}}</td>
                         <td>{{currBug.creator.name}}</td>
+                        <td>{{currBug.creator._id}}</td>
                         <td><button v-on:click="deleteBug(currBug._id)">Delete</button></td>
                     </tr>
                 </tbody>
@@ -43,18 +45,28 @@ export default {
     data() {
         return {
             bugs: [],
-            loggedInUser: null
+            loggedInUser: null,
+            bug: {
+                title: 'New bug',
+                description: 'New bug',
+                severity: 2,
+                createdAt: Date.now(),
+                creator: {
+                    id: 'abc',
+                    name: 'name'
+                }
+            }
 
         }
     },
     created() {
-        bugService.query()
+        this.loggedInUser = userService.getLoggedInUser();
+        bugService.query(this.loggedInUser.userName)
             .then(bugs => {
                 console.log('query');
                 console.log(bugs);
                 this.bugs = bugs;
             });
-        this.loggedInUser = userService.getLoggedInUser();
     },
     methods: {
         deleteBug(bugId) {
@@ -64,23 +76,13 @@ export default {
                 });
         },
         onAddBugClicked() {
-            var bug = {
-                title: 'New bug',
-                description: 'New bug',
-                severity: 1,
-                createdAt: 1542107359454,
-                creator: {
-                    id: 'abc',
-                    name: 'name'
-                }
-            }
-            bugService.addBug(bug)
+            bugService.addBug(this.bug)
                 .then(res => {
                     console.log(res);
-                    bugService.getBugs()
-                        .then(bugs => {
-                            this.bugs = bugs;
-                        });
+                    // bugService.query()
+                    //     .then(bugs => {
+                    //         this.bugs = bugs;
+                    //     });
                 })
 
         },
