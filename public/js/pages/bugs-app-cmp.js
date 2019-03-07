@@ -1,13 +1,16 @@
 import bugService from '../services/bug-service.js';
-// import bookList from '../cmps/book-list-cmp.js';
-// import bookDetails from '../cmps/book-details-cmp.js'
-// import bookFilter from '../cmps/book-filter-cmp.js';
-// import bookAdd from '../pages/book-add-cmp.js';
+import userService from '../services/user-service.js';
 
 export default {
     template: `
         <section class="bugs-app">
             <h1>Bugs App</h1>
+            <div class="flex">
+                Loggedin User
+                <pre>{{loggedInUser}}</pre>
+                <button v-on:click="onLogoutClicked">Logout</button>
+
+            </div>
             <table border="1">
                 <thead>
                     <tr>
@@ -24,10 +27,12 @@ export default {
                         <td>{{currBug.description}}</td>
                         <td>{{currBug.severity}}</td>
                         <td>{{currBug.creator.name}}</td>
-                        <td><button v-on:click="onDeleteClicked(currBug._id)">Delete</button></td>
+                        <td><button v-on:click="deleteBug(currBug._id)">Delete</button></td>
                     </tr>
                 </tbody>
             </table>
+            <button v-on:click="onAddBugClicked">Add bug</button>
+            <!-- <button v-on:click="onLogoutClicked">Logout</button> -->
 
             <!-- <book-add></book-add>
             <book-filter v-on:filtered="setFilter"></book-filter>
@@ -38,57 +43,57 @@ export default {
     data() {
         return {
             bugs: [],
-            // // selectedBook: null,
-            // // filter: null,
-            // filterBy: {
-            //     title: '',
-            //     fromPrice: 0,
-            //     toPrice: Infinity
-            // }
+            loggedInUser: null
+
         }
     },
     created() {
-        bugService.getBugs()
+        bugService.query()
             .then(bugs => {
-                console.log('getBugs');
+                console.log('query');
                 console.log(bugs);
                 this.bugs = bugs;
             });
-        // bookService.getBooks()
-        //     .then(books => this.books = books);
+        this.loggedInUser = userService.getLoggedInUser();
     },
     methods: {
-        onDeleteClicked(bugId) {
+        deleteBug(bugId) {
             bugService.deleteBug(bugId)
                 .then(res => {
-                    // console.log(res);
+                    console.log(res);
+                });
+        },
+        onAddBugClicked() {
+            var bug = {
+                title: 'New bug',
+                description: 'New bug',
+                severity: 1,
+                createdAt: 1542107359454,
+                creator: {
+                    id: 'abc',
+                    name: 'name'
+                }
+            }
+            bugService.addBug(bug)
+                .then(res => {
+                    console.log(res);
                     bugService.getBugs()
                         .then(bugs => {
                             this.bugs = bugs;
                         });
-                });
+                })
+
+        },
+        onLogoutClicked() {
+            console.log('onLogoutClicked');
+            userService.logOut()
+                .then(res => {
+                    console.log('User logged out', res);
+                    this.$router.push('/login');
+                })
         }
-        // setFilter(filterBy) {
-        //     console.log('BoookApp Got Filter: ', filterBy);
-        //     this.filterBy = filterBy;
-        // },
-        // selectBook(bookId) {
-        //     console.log(bookId);
-        //     bookService.getBookById(bookId)
-        //         .then(book => this.selectedBook = book);
-        // },
     },
     computed: {
-        // booksToShow() {
-        //     if (!this.filterBy.title &&
-        //         this.filterBy.fromPrice === 0 &&
-        //         this.filterBy.toPrice === Infinity) return this.books;
-        //     return this.books.filter(book => {
-        //         return book.title.includes(this.filterBy.title) &&
-        //             book.listPrice.amount > this.filterBy.fromPrice &&
-        //             book.listPrice.amount < this.filterBy.toPrice
-        //     })
-        // },
 
     },
     components: {

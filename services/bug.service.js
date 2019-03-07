@@ -16,8 +16,9 @@ function query() {
     return Promise.resolve(bugs);
 }
 
-function add(bug) {
-    bug._id = _makeId()
+function add(bug, creator) {
+    bug._id = _makeId();
+    bug.creator = { name: creator, id: 'abc' }
     bugs.push(bug)
     return _saveBugsToFile().then(() => bug)
 }
@@ -58,7 +59,7 @@ function _saveBugsToFile() {
             if (err) {
                 console.error('Had problem writing to bugs file', err);
                 reject(err);
-            }  else resolve();
+            } else resolve();
         });
     })
 }

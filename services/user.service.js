@@ -3,7 +3,8 @@ const fs = require('fs');
 module.exports = {
     query,
     add,
-    isValidUser
+    checkLogin,
+    checkSignup
 }
 
 var users = require('../data/users.json');
@@ -39,11 +40,29 @@ function _saveUsersToFile() {
     })
 }
 
-function isValidUser(username, password) {
-    return users.find((user) => {
-        return user.username === username &&
-            user.password === password
+function checkLogin(userName, password) {
+    var user = users.find((user) => {
+        return user.userName === userName && user.password === password;
     });
-    // if (user) return true;
-    // return false;
+    if (user) {
+        var userToReturn = { ...user };
+        delete userToReturn.pass;
+        return Promise.resolve(userToReturn);
+    }
+    else {
+        return Promise.reject('Wrong user');
+    }
 }
+
+function checkSignup(userName) {
+    var user = users.find((user) => {
+        return user.userName === userName;
+    });
+    if (user) {
+        console.log('checkSignup - User already exist');
+        return Promise.reject('User already exist');
+    } else {
+        return Promise.resolve();
+    }
+}
+

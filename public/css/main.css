@@ -4,3 +4,11 @@ footer {
     /* width: 100%; */
     /* font-weight: bold; */
 }
+
+.flex{
+    display: flex;
+}
+
+.bugs-login{
+    flex-direction: column;
+}
