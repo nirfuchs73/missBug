@@ -16,7 +16,8 @@ export default {
         return {
             user: {
                 userName: '',
-                password: ''
+                password: '',
+                isAdmin: false
             }
         }
     },
@@ -28,10 +29,12 @@ export default {
             userService.signUp(this.user)
                 .then(user => {
                     console.log('New user was added: ', user);
-                    this.$router.push('/bugs');
+                    this.$router.push('/bug');
                 })
                 .catch(err => {
                     console.log('User already exist', err);
+                    this.user.userName = '';
+                    this.user.password = '';
                     this.$router.push('/signup');
                 })
         }

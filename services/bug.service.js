@@ -18,9 +18,14 @@ var bugs = require('../data/bugs.json');
 
 function query(filterBy) {
     // var carsToShow = cars.filter(car => car.userId === filterBy.userId)
-    console.log(filterBy.userName);
-    var bugsToShow = bugs.filter(bug => bug.creator.name === filterBy.userName);
-    return Promise.resolve(bugsToShow);
+    // console.log(filterBy.userName);
+    // console.log(filterBy.isAdmin);
+    if (filterBy.isAdmin === 'true') {
+        return Promise.resolve(bugs);
+    } else {
+        var bugsToShow = bugs.filter(bug => bug.creator.name === filterBy.userName);
+        return Promise.resolve(bugsToShow);
+    }
 }
 
 function add(bug, user) {

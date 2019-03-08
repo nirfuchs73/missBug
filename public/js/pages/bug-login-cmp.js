@@ -28,11 +28,12 @@ export default {
                 .then(user => {
                     if (user) {
                         console.log('User logged in: ', user);
-                        this.$router.push('/bugs');
-                    } else {
-                        console.log('User not exist');
-                        this.$router.push('/signup');
+                        this.$router.push('/bug');
                     }
+                }).catch(err => {
+                    console.log(err);
+                    console.log('User not exist');
+                    this.$router.push('/signup');
                 });
         }
     },

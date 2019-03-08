@@ -61,12 +61,16 @@ export default {
     },
     created() {
         this.loggedInUser = userService.getLoggedInUser();
-        bugService.query(this.loggedInUser.userName)
-            .then(bugs => {
-                console.log('query');
-                console.log(bugs);
-                this.bugs = bugs;
-            });
+        if (this.loggedInUser) {
+            bugService.query(this.loggedInUser.userName, this.loggedInUser.isAdmin)
+                .then(bugs => {
+                    console.log('query');
+                    console.log(bugs);
+                    this.bugs = bugs;
+                });
+        } else {
+            this.$router.push('/login');
+        }
     },
     methods: {
         deleteBug(bugId) {

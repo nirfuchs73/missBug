@@ -1,4 +1,4 @@
-import bugsApp from './pages/bugs-app-cmp.js';
+import bugsApp from './pages/bug-app-cmp.js';
 import myRoutes from './routes.js';
 
 const myRouter = new VueRouter({routes: myRoutes});

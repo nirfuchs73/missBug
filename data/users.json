@@ -2,16 +2,31 @@
     {
         "userName": "user1",
         "password": "1234",
-        "_id": "Rnl"
+        "_id": "Rnl",
+        "isAdmin": false
     },
     {
         "userName": "user2",
         "password": "1234",
-        "_id": "1K0"
+        "_id": "1K0",
+        "isAdmin": false
     },
     {
         "userName": "user3",
         "password": "1234",
-        "_id": "8TD"
+        "_id": "8TD",
+        "isAdmin": false
+    },
+    {
+        "userName": "user4",
+        "password": "1234",
+        "_id": "jCa",
+        "isAdmin": false
+    },
+    {
+        "userName": "admin",
+        "password": "admin",
+        "_id": "ylf",
+        "isAdmin": true
     }
 ]
