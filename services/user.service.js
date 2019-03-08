@@ -4,7 +4,9 @@ module.exports = {
     query,
     add,
     checkLogin,
-    checkSignup
+    checkSignup,
+    remove,
+    getById
 }
 
 var users = require('../data/users.json');
@@ -64,5 +66,18 @@ function checkSignup(userName) {
     } else {
         return Promise.resolve();
     }
+}
+
+function remove(userId) {
+    var userIdx = users.findIndex(user => user._id === userId);
+    if (userIdx === -1) return Promise.reject('User Not Found');
+    users.splice(userIdx, 1);
+    return _saveUsersToFile();
+}
+
+function getById(id) {
+    var user = users.find(user => user._id === id);
+    if (user) return Promise.resolve(user);
+    else return Promise.reject('Unknown user');
 }
 

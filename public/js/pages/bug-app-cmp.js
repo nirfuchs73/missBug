@@ -6,9 +6,10 @@ export default {
         <section class="bugs-app">
             <h1>Bugs App</h1>
             <div class="flex">
-                Loggedin User
-                <pre>{{loggedInUser}}</pre>
+                Loggedin User:
+                {{loggedInUser.userName}}
                 <button v-on:click="onLogoutClicked">Logout</button>
+                <button v-show="isAdmin" v-on:click="onUserClicked">Users</button>
 
             </div>
             <table border="1">
@@ -30,6 +31,7 @@ export default {
                         <td>{{currBug.creator.name}}</td>
                         <td>{{currBug.creator._id}}</td>
                         <td><button v-on:click="deleteBug(currBug._id)">Delete</button></td>
+                        <td><button v-on:click="editBug(currBug._id)">Edit</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -55,7 +57,8 @@ export default {
                     id: 'abc',
                     name: 'name'
                 }
-            }
+            },
+            isAdmin: false
 
         }
     },
@@ -67,6 +70,7 @@ export default {
                     console.log('query');
                     console.log(bugs);
                     this.bugs = bugs;
+                    this.isAdmin = this.loggedInUser.isAdmin;
                 });
         } else {
             this.$router.push('/login');
@@ -78,6 +82,9 @@ export default {
                 .then(res => {
                     console.log(res);
                 });
+        },
+        editBug(bugId) {
+
         },
         onAddBugClicked() {
             bugService.addBug(this.bug)
@@ -97,6 +104,10 @@ export default {
                     console.log('User logged out', res);
                     this.$router.push('/login');
                 })
+        },
+        onUserClicked() {
+            console.log('onUserClicked');
+            this.$router.push('/user');
         }
     },
     computed: {

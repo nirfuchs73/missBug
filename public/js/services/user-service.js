@@ -1,12 +1,15 @@
 // import storageService from './storage-service.js';
-// const BUGS_KEY = 'bugs';
 
 export default {
     signUp: signUp,
     login: login,
     logOut: logOut,
-    getLoggedInUser: getLoggedInUser
+    getLoggedInUser: getLoggedInUser,
+    query: query,
+    deleteUser: deleteUser,
+    getBugById: getBugById
 }
+var users = [];
 
 var loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
 
@@ -38,6 +41,32 @@ function logOut() {
 
 function getLoggedInUser() {
     return loggedInUser;
+}
+
+function query() {
+    var api = `http://127.0.0.1:3000/api/user`;
+    return axios.get(api)
+        .then(res => res.data)
+        .then(loadedUsers => {
+            users = loadedUsers;
+            return users;
+        });
+}
+
+function deleteUser(userId) {
+    var api = `http://127.0.0.1:3000/api/user/${userId}`;
+    return axios.delete(api)
+        .then(res => res.data)
+        .then(() => {
+            const idx = users.findIndex(user => user._id === userId);
+            users.splice(idx, 1);
+        });
+}
+
+function getBugById(userId) {
+    var api = `http://127.0.0.1:3000/api/user/${userId}`;
+    return axios.get(api)
+        .then(res => res.data);
 }
 
 

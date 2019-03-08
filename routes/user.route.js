@@ -45,4 +45,33 @@ module.exports = app => {
         req.session.destroy();
         res.json({});
     });
+
+    // GET users
+    app.get('/api/user', (req, res) => {
+        userService.query()
+            .then(users => res.json(users));
+    });
+
+    // DELETE user
+    app.delete('/api/user/:userId', (req, res) => {
+        const { userId } = req.params;
+        userService.remove(userId)
+            .then(() => res.end())
+            .catch(err => {
+                res.end('Was not able to remove user');
+            })
+    })
+
+    // GET single user
+    app.get('/api/user/:userId', (req, res) => {
+        // const userId = req.params.userId;
+        const { userId } = req.params;
+
+        userService.getById(userId)
+            .then(user => res.json(user))
+            .catch(err => {
+                console.error('Problems:', err);
+                res.status(500).send('User not Found');
+            })
+    })
 }

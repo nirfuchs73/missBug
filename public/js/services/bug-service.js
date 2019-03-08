@@ -1,5 +1,4 @@
 // import storageService from './storage-service.js';
-// const BUGS_KEY = 'bugs';
 
 export default {
     query: query,
@@ -11,7 +10,7 @@ export default {
 var bugs = [];
 
 
-function query(userName,isAdmin) {
+function query(userName, isAdmin) {
     var api = `http://127.0.0.1:3000/api/bug?userName=${userName}&isAdmin=${isAdmin}`;
     return axios.get(api)
         .then(res => res.data)

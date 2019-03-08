@@ -24,7 +24,6 @@ module.exports = app => {
                 console.error('Problems:', err);
                 res.status(500).send('Bug not Found');
             })
-
     })
     // DELETE single bug
     app.delete('/api/bug/:bugId', (req, res) => {
