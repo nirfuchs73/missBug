@@ -29,7 +29,7 @@ export default {
             userService.signUp(this.user)
                 .then(user => {
                     console.log('New user was added: ', user);
-                    this.$router.push('/login');
+                    this.$router.push('/bug');
                 })
                 .catch(err => {
                     console.log('User already exist', err);

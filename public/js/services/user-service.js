@@ -16,7 +16,11 @@ var loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
 function signUp(user) {
     var api = `http://127.0.0.1:3000/api/signup`;
     return axios.post(api, user)
-        .then(res => res.data);
+        .then(res => {
+            loggedInUser = res.data;
+            localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+            return res.data;
+        });
 
 }
 
@@ -25,7 +29,7 @@ function login(user) {
     return axios.post(api, user)
         .then(res => {
             loggedInUser = res.data;
-            localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
+            localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
             return res.data;
         });
 }

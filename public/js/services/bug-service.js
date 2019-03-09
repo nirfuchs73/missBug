@@ -43,10 +43,9 @@ function addBug(bug) {
 }
 
 function getBugById(bugId) {
-    var bug = gBugs.find(function (bug) {
-        return bugId === bug.id
-    })
-    return Promise.resolve(bug);
+    var api = `http://127.0.0.1:3000/api/bug/${bugId}`;
+    return axios.get(api)
+        .then(res => res.data);
 }
 
 function login(userObj) {
