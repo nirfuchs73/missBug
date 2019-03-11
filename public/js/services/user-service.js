@@ -14,7 +14,7 @@ var users = [];
 var loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
 
 function signUp(user) {
-    var api = `http://127.0.0.1:3000/api/signup`;
+    var api = `/api/signup`;
     return axios.post(api, user)
         .then(res => {
             loggedInUser = res.data;
@@ -25,7 +25,7 @@ function signUp(user) {
 }
 
 function login(user) {
-    var api = `http://127.0.0.1:3000/api/login`;
+    var api = `/api/login`;
     return axios.post(api, user)
         .then(res => {
             loggedInUser = res.data;
@@ -35,7 +35,7 @@ function login(user) {
 }
 
 function logOut() {
-    var api = `http://127.0.0.1:3000/api/logout`;
+    var api = `/api/logout`;
     return axios.get(api).then(res => {
         localStorage.removeItem('loggedInUser')
         loggedInUser = null;
@@ -48,7 +48,7 @@ function getLoggedInUser() {
 }
 
 function query() {
-    var api = `http://127.0.0.1:3000/api/user`;
+    var api = `/api/user`;
     return axios.get(api)
         .then(res => res.data)
         .then(loadedUsers => {
@@ -58,7 +58,7 @@ function query() {
 }
 
 function deleteUser(userId) {
-    var api = `http://127.0.0.1:3000/api/user/${userId}`;
+    var api = `/api/user/${userId}`;
     return axios.delete(api)
         .then(res => res.data)
         .then(() => {
@@ -68,9 +68,7 @@ function deleteUser(userId) {
 }
 
 function getBugById(userId) {
-    var api = `http://127.0.0.1:3000/api/user/${userId}`;
+    var api = `/api/user/${userId}`;
     return axios.get(api)
         .then(res => res.data);
 }
-
-

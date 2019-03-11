@@ -20,12 +20,13 @@ function query(filterBy) {
     // var carsToShow = cars.filter(car => car.userId === filterBy.userId)
     // console.log(filterBy.userName);
     // console.log(filterBy.isAdmin);
-    if (filterBy.isAdmin === 'true') {
-        return Promise.resolve(bugs);
-    } else {
-        var bugsToShow = bugs.filter(bug => bug.creator.name === filterBy.userName);
-        return Promise.resolve(bugsToShow);
-    }
+    return Promise.resolve(bugs);
+    // if (filterBy.isAdmin === 'true') {
+    //     return Promise.resolve(bugs);
+    // } else {
+    //     var bugsToShow = bugs.filter(bug => bug.creator.name === filterBy.userName);
+    //     return Promise.resolve(bugsToShow);
+    // }
 }
 
 function add(bug, user) {
@@ -36,8 +37,8 @@ function add(bug, user) {
 }
 
 function update(bug) {
-    var bugIdx = bugs.findIndex(currBug => currBug.id === bug._id);
-    bugs.splice(bugIdx, 1, bug)
+    var bugIdx = bugs.findIndex(currBug => currBug._id === bug._id);
+    bugs.splice(bugIdx, 1, bug);
     return _saveBugsToFile().then(() => bug)
     // return Promise.resolve(bug)
 }

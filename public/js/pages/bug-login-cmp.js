@@ -2,7 +2,7 @@ import userService from '../services/user-service.js';
 
 export default {
     template: `
-        <section class="bugs-login">
+        <section class="bug-login">
             <h1>Login</h1>
             <form v-on:submit.prevent="onLoginClicked">
                 <input class="bugs-login-text" placeholder="Username" type="text" v-model="user.userName">

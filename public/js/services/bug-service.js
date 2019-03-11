@@ -3,15 +3,21 @@
 export default {
     query: query,
     deleteBug: deleteBug,
-    login,
     getBugById: getBugById,
-    addBug: addBug
+    addBug: addBug,
+    getEmpty: getEmpty,
+    updateBug: updateBug
 }
 var bugs = [];
+const API_URL = '/api/bug';
 
+// function query(filterQuery = '') {
+// return axios.get(`${API_URL}${filterQuery}`)
 
-function query(userName, isAdmin) {
-    var api = `http://127.0.0.1:3000/api/bug?userName=${userName}&isAdmin=${isAdmin}`;
+// function query(userName, isAdmin) {
+// var api = `/api/bug?userName=${userName}&isAdmin=${isAdmin}`;
+function query(filterQuery = '') {
+    var api = `/api/bug?${filterQuery}`;
     return axios.get(api)
         .then(res => res.data)
         .then(loadedBugs => {
@@ -21,7 +27,7 @@ function query(userName, isAdmin) {
 }
 
 function deleteBug(bugId) {
-    var api = `http://127.0.0.1:3000/api/bug/${bugId}`;
+    var api = `/api/bug/${bugId}`;
     return axios.delete(api)
         .then(res => res.data)
         .then(() => {
@@ -30,9 +36,21 @@ function deleteBug(bugId) {
         });
 }
 
+function updateBug(bug) {
+    var api = `/api/bug/${bug._Id}`;
+    return axios.put(api, bug)
+        .then(res => res.data)
+        .then(updatedBug => {
+            // TODO: bugs.findIndex, and replcae the bug
+            // var bugIdx = bugs.findIndex(updatedBug => currBug.id === bug._id);
+            // bugs.splice(bugIdx, 1, bug);
+            return updatedBug;
+        });
+}
+
 
 function addBug(bug) {
-    var api = `http://127.0.0.1:3000/api/bug`;
+    var api = `/api/bug`;
     return axios.post(api, bug)
         .then(res => res.data)
         .then(addedBug => {
@@ -43,21 +61,18 @@ function addBug(bug) {
 }
 
 function getBugById(bugId) {
-    var api = `http://127.0.0.1:3000/api/bug/${bugId}`;
+    var api = `/api/bug/${bugId}`;
     return axios.get(api)
         .then(res => res.data);
 }
 
-function login(userObj) {
-    var api = `http://127.0.0.1:3000/api/login`;
-    return axios.post(api, userObj).then(res => res.data);
+function getEmpty() {
+    return {
+        title: '',
+        description: '',
+        severity: ''
+    }
 }
-// function updateBug(bugId, newSpeed) {
-//     var bug = gBugs.find(bug => bug.id === bugId)
-//     bug.maxSpeed = newSpeed;
-//     storageService.store(BUGS_KEY, gBugs);
 
-//     return Promise.resolve(bug);
-// }
 
 

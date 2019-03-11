@@ -28,10 +28,25 @@ module.exports = app => {
     // DELETE single bug
     app.delete('/api/bug/:bugId', (req, res) => {
         const { bugId } = req.params;
-        bugService.remove(bugId)
-            .then(() => res.end())
-            .catch(err => {
-                res.end('No Possible');
+        // Same as:
+        // const bugId = req.params.bugId;
+        // const { loggedInUser } = req.session.loggedInUser;
+        // console.log(req.session.loggedInUser);
+        var loggedInUser = req.session.loggedInUser;
+        bugService.getById(bugId)
+            .then(bug => {
+                console.log(loggedInUser.isAdmin, bug.creator.name, loggedInUser.userName);
+                if (loggedInUser.isAdmin || bug.creator.name === loggedInUser.userName) {
+                    console.log('delete bug');
+
+                    bugService.remove(bugId)
+                        .then(() => res.end())
+                        .catch(err => {
+                            res.end('No Possible');
+                        })
+                } else {
+                    return res.end('User can delete only its own bugs');
+                }
             })
     })
     // POST (ADD single bug)
@@ -48,11 +63,16 @@ module.exports = app => {
 
     // PUT (UPDATE single bug)
     app.put('/api/bug/:bugId', (req, res) => {
+        var loggedInUser = req.session.loggedInUser;
         const bug = req.body;
-        bugService.update(bug)
-            .then((updatedBug) => res.json(updatedBug))
-            .catch(err => {
-                res.end('No Possible');
-            })
+        if (loggedInUser.isAdmin || bug.creator.name === loggedInUser.userName) {
+            bugService.update(bug)
+                .then((updatedBug) => res.json(updatedBug))
+                .catch(err => {
+                    res.end('No Possible');
+                });
+        } else {
+            return res.end('User can edit only its own bugs');
+        }
     })
 };

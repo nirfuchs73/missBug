@@ -1,18 +1,19 @@
 import bugService from '../services/bug-service.js';
 import userService from '../services/user-service.js';
+import bugList from '../cmps/bug-list-cmp.js';
 
 export default {
     template: `
-        <section class="bugs-app">
+        <section v-if="loggedInUser" class="bugs-app bug-wrapper">
             <h1>Bugs App</h1>
             <div class="flex">
                 Loggedin User:
                 {{loggedInUser.userName}}
                 <button v-on:click="onLogoutClicked">Logout</button>
                 <button v-show="isAdmin" v-on:click="onUserClicked">Users</button>
-
             </div>
-            <table border="1">
+            <bug-list v-bind:bugs="bugs" v-on:delete="deleteBug" v-on:edit="editBug"></bug-list>
+            <!-- <table border="1">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -34,14 +35,8 @@ export default {
                         <td><button v-on:click="editBug(currBug._id)">Edit</button></td>
                     </tr>
                 </tbody>
-            </table>
-            <button v-on:click="onAddBugClicked">Add bug</button>
-            <!-- <button v-on:click="onLogoutClicked">Logout</button> -->
-
-            <!-- <book-add></book-add>
-            <book-filter v-on:filtered="setFilter"></book-filter>
-            <book-list v-bind:books="booksToShow"></book-list>
-            <book-details v-bind:book="selectedBook"></book-details> -->
+            </table> -->
+            <!-- <button v-on:click="onAddBugClicked">Add bug</button> -->
         </section> 
     `,
     data() {
@@ -65,7 +60,10 @@ export default {
     created() {
         this.loggedInUser = userService.getLoggedInUser();
         if (this.loggedInUser) {
-            bugService.query(this.loggedInUser.userName, this.loggedInUser.isAdmin)
+            // var filterQuery = `userName=${this.loggedInUser.userName}&isAdmin=${this.loggedInUser.isAdmin}`
+            var filterQuery = '';
+            // bugService.query(this.loggedInUser.userName, this.loggedInUser.isAdmin)
+            bugService.query(filterQuery)
                 .then(bugs => {
                     console.log('query');
                     console.log(bugs);
@@ -84,7 +82,12 @@ export default {
                 });
         },
         editBug(bugId) {
-
+            bugService.getBugById(bugId)
+                .then(bug => {
+                    console.log(bug);
+                    // bug.title = 'New bug 1';
+                    this.$router.push('/bug/edit/' + bugId);
+                });
         },
         onAddBugClicked() {
             bugService.addBug(this.bug)
@@ -114,7 +117,7 @@ export default {
 
     },
     components: {
-        // bookList,
+        bugList,
         // bookDetails,
         // bookFilter,
         // bookAdd
